@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,16 +29,14 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_userAn;
 
     private FirebaseAuth auth;
+    private FirebaseUser currentUser;
 
     private int total_score = 0;
     private int count = 0;
 
     static final String STATE_SCORE = "user_score";
     static final String STATE_COUNT = "user_count";
-    static final String SUBMIT_STATE = "";
-
-
-
+    static final String SUBMIT_STATE = "user_submit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         tv_userAn = (TextView) findViewById(R.id.tv_userAn);
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_submit.setEnabled(false);
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference();
 
         if (savedInstanceState != null){
             tv_num1.setText(savedInstanceState.getString("num1"));
@@ -103,12 +108,12 @@ public class MainActivity extends AppCompatActivity {
         btn_submit.setEnabled(savedInstanceState.getBoolean(SUBMIT_STATE));
     }
 
-    @Override
-    protected void onResume(){
-        eventCount++;
-        Log.i(MyFlag, intToStr(eventCount) + ": Activity onResume State Transition");
-        super.onResume();
-    }
+//    @Override
+//    protected void onResume(){
+//        eventCount++;
+//        Log.i(MyFlag, intToStr(eventCount) + ": Activity onResume State Transition");
+//        super.onResume();
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState){
@@ -125,33 +130,33 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void onPause(){
-        eventCount++;
-        Log.i(MyFlag, intToStr(eventCount) + ": Activity onPause State Transition");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop(){
-        eventCount++;
-        Log.i(MyFlag, intToStr(eventCount) + ": Activity onStop State Transition");
-        super.onStop();
-    }
-
-    @Override
-    protected void onRestart(){
-        eventCount++;
-        Log.i(MyFlag, intToStr(eventCount) + ": Activity onRestart State Transition");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onDestroy(){
-        eventCount++;
-        Log.i(MyFlag, intToStr(eventCount) + ": Activity onDestroy State Transition");
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onPause(){
+//        eventCount++;
+//        Log.i(MyFlag, intToStr(eventCount) + ": Activity onPause State Transition");
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onStop(){
+//        eventCount++;
+//        Log.i(MyFlag, intToStr(eventCount) + ": Activity onStop State Transition");
+//        super.onStop();
+//    }
+//
+//    @Override
+//    protected void onRestart(){
+//        eventCount++;
+//        Log.i(MyFlag, intToStr(eventCount) + ": Activity onRestart State Transition");
+//        super.onRestart();
+//    }
+//
+//    @Override
+//    protected void onDestroy(){
+//        eventCount++;
+//        Log.i(MyFlag, intToStr(eventCount) + ": Activity onDestroy State Transition");
+//        super.onDestroy();
+//    }
 
     /**
      * Created by sophiahon on 2018/2/1
@@ -159,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Start the event when click the generate button
     public void goGenerateQuestions(View view) {
+        /***
         btn_submit.setEnabled(true);  //Enable the submit button
         //submit = true;
         //reset the textfield
@@ -173,6 +179,14 @@ public class MainActivity extends AppCompatActivity {
         tv_num2.setText(op2.toString());
         compute.setNum1(op1);
         compute.setNum2(op2);
+         ***/
+
+
+        btn_submit.setEnabled(true);
+        tv_userAn.setText("");
+        total_score = 0;
+        count = 0;
+
 
     }
 

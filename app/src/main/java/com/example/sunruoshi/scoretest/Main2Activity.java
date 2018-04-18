@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ public class Main2Activity extends AppCompatActivity {
     Button btn_login, btn_register;
     private FirebaseAuth firebaseAuth;
     private String TAG = "Database";
+    private FirebaseUser currentUser;
 
 
     @Override
@@ -44,29 +46,29 @@ public class Main2Activity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        final DatabaseReference myRef = database.getReference();
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.d(TAG, "Value is: " + value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = username.getText().toString().trim();
+                final String email = username.getText().toString().trim();
                 String password1 = password.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
@@ -84,6 +86,13 @@ public class Main2Activity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
                                     Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+
+                                    currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                    User newUser = new User(email, 0);
+                                    myRef.child("Users").child(currentUser.getUid()).setValue(newUser);
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    i.putExtra("name", email);
+                                    startActivity(i);
                                 }else{
                                     Toast.makeText(getBaseContext(), "Registration Failed", Toast.LENGTH_LONG).show();
                                 }
