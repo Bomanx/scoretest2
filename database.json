@@ -1,0 +1,54 @@
+{
+	"questions" : {
+		"question1": {
+			"operand1": "45",
+			"operand2": "5",
+			"result": "9"
+		},
+		"question2" : {
+			"operand1" : "56",
+			"operand2" : "8",
+			"result": "7"
+		},
+		"question3": {
+			"operand1": "81",
+			"operand2": "9",
+			"result": "9"
+		},
+		"question4": {
+			"operand1": "12",
+			"operand2": "3",
+			"result": "4"
+		},
+		"question5": {
+			"operand1": "27",
+			"operand2": "3",
+			"result": "9"
+		},
+		"question6": {
+			"operand1": "64",
+			"operand2": "8",
+			"result": "8"
+		},
+		"question7": {
+			"operand1": "18",
+			"operand2": "6",
+			"result": "3"
+		},
+		"question8": {
+			"operand1": "14",
+			"operand2": "7",
+			"result": "2"
+		},
+		"question9": {
+			"operand1": "54",
+			"operand2": "9",
+			"result": "6"
+		},
+		"question10": {
+			"operand1": "36",
+			"operand2": "9",
+			"result": "4"
+		}
+	}
+}
