@@ -22,7 +22,6 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".showTop5" />
-        <activity android:name=".top5listAdapter"></activity>
     </application>
 
 </manifest>
