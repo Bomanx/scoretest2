@@ -232,6 +232,10 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Your final score is: " + compute.getScore(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Your final score is: " + total_score, Toast.LENGTH_LONG).show();
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+                myRef.child("Users").child(currentUser.getUid()).child("score").setValue(total_score);
+
 //                myRef.child("Users").child(currentUser.getUid()).child("score").addValueEventListener(new ValueEventListener() {
 //                    @Override
 //                    public void onDataChange(DataSnapshot dataSnapshot) {
@@ -246,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                    }
 //                });
-                myRef.child("Users").child(currentUser.getUid()).child("score").setValue(total_score);
+
                 //compute.setCount(0);
                 count = 0;
                 //compute.setScore(0);
