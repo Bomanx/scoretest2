@@ -170,30 +170,32 @@ public class MainActivity extends AppCompatActivity {
 
     // Start the event when click the generate button
     public void goGenerateQuestions(View view) {
-        /***
-        btn_submit.setEnabled(true);  //Enable the submit button
-        //submit = true;
-        //reset the textfield
-        tv_userAn.setText("");
-        //compute.setScore(0);  //Reset the score
-        total_score = 0;
-        //compute.setCount(0);  //Reset the questions count
-        count = 0;
-        Integer op2 = (int) (Math.random()*10 + 1); //Generate randomly number
-        Integer op1 = (int) (Math.random()*10)*op2;
-        tv_num1.setText(op1.toString());
-        tv_num2.setText(op2.toString());
-        compute.setNum1(op1);
-        compute.setNum2(op2);
-         ***/
 
+        //Question question = getQuestion();
 
         btn_submit.setEnabled(true);
         tv_userAn.setText("");
         total_score = 0;
         count = 0;
 
+        //Getting the question from the database
+        auth = FirebaseAuth.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("questions").child("question"+Integer.toString(count+1)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Question temp = dataSnapshot.getValue(Question.class);
 
+                tv_num1.setText(temp.operand1);
+                tv_num2.setText(temp.operand2);
+                compute.setNum1(Integer.parseInt(temp.operand1));
+                compute.setNum2(Integer.parseInt(temp.operand2));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 
@@ -246,13 +248,24 @@ public class MainActivity extends AppCompatActivity {
             //reset the textfield
             tv_userAn.setText("");
 
-            //randomly generate the next question
-            Integer op2 = (int) (Math.random() * 10 + 1);
-            Integer op1 = (int) (Math.random() * 10)*op2;
-            tv_num1.setText(op1.toString());
-            tv_num2.setText(op2.toString());
-            compute.setNum1(op1);
-            compute.setNum2(op2);
+            //Getting the question from the database
+            auth = FirebaseAuth.getInstance();
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference();
+            myRef.child("questions").child("question"+Integer.toString(count+1)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Question temp = dataSnapshot.getValue(Question.class);
+
+                    tv_num1.setText(temp.operand1);
+                    tv_num2.setText(temp.operand2);
+                    compute.setNum1(Integer.parseInt(temp.operand1));
+                    compute.setNum2(Integer.parseInt(temp.operand2));
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
 
             // If it is empty input, warning the player!!
@@ -261,11 +274,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
     }
-
-    /**
-     * Created by sunruoshi on 2018/2/9.
-     */
-
 
 
     public static class Compute {

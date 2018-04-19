@@ -121,43 +121,4 @@ public class Main2Activity extends AppCompatActivity {
         });
 
     }
-
-
-/***
-    public void Onclick(View view) {
-        if (view == btn_login) {
-            if (username.getText().toString().equals("scoretest") && password.getText().toString().equals("591")) {
-                Intent intent = new Intent();
-                intent.setClass(Main2Activity.this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(getApplicationContext(), "Wrong", Toast.LENGTH_LONG).show();
-                return;
-            }
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            i.putExtra("name", username.getText().toString());
-            startActivity(i);
-        } else if (view == btn_register) {
-            String email = username.getText().toString();
-            String password1 = password.getText().toString();
-
-            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password1)) {
-
-            } else {
-                firebaseAuth.createUserWithEmailAndPassword(email, password1)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
-                                }else{
-                                    Toast.makeText(getBaseContext(), "Registration Failed", Toast.LENGTH_LONG).show();
-                                }
-
-                            }
-                        });
-            }
-        }
-    }
-    ***/
 }
