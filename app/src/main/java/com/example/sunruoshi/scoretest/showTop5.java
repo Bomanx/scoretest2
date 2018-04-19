@@ -30,12 +30,14 @@ public class showTop5 extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Query query = mDatabase.child("Users").orderByChild("score").limitToFirst(5);
+        Log.e("fetch top5", "players are: " + "!!!!!!!!!!!!!!");
+
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User single = dataSnapshot.getValue(User.class);
                 listResult.add(single);
-                Log.i("fetch top5", "players are: " + single.email);
+                Log.e("fetch top5", "players are: " + single.email);
                 listAdapter.notifyDataSetChanged();
             }
 
