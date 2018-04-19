@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_num2;
     TextView symbol;
     Button btn_submit;
+    Button btn_top5;
     Compute compute;
     TextView tv_userAn;
 
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         tv_num2 = (TextView) findViewById(R.id.tv_num2);
         tv_userAn = (TextView) findViewById(R.id.tv_userAn);
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_top5 = (Button) findViewById(R.id.btn_top5);
         btn_submit.setEnabled(false);
+
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -86,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 goSubmit();
+            }
+        });
+
+        btn_top5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), showTop5.class);
+                v.getContext().startActivity(myIntent);
             }
         });
     }
@@ -221,7 +232,10 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Your final score is: " + compute.getScore(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Your final score is: " + total_score, Toast.LENGTH_LONG).show();
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
                 myRef.child("Users").child(currentUser.getUid()).child("score").setValue(total_score);
+
 //                myRef.child("Users").child(currentUser.getUid()).child("score").addValueEventListener(new ValueEventListener() {
 //                    @Override
 //                    public void onDataChange(DataSnapshot dataSnapshot) {
@@ -236,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                    }
 //                });
+
                 //compute.setCount(0);
                 count = 0;
                 //compute.setScore(0);

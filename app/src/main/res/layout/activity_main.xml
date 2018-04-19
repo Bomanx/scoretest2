@@ -106,6 +106,13 @@
             android:onClick="goSubmit"
             android:text="Submit" />
 
+        <Button
+            android:id="@+id/btn_top5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check Top 5 Players"
+            />
+
     </TableLayout>
 
 </LinearLayout>
