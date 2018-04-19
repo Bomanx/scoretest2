@@ -7,15 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 
 import java.util.List;
 
 public class top5listAdapter extends BaseAdapter {
     private Context context;
-    private List<Players> players;
+    private List<User> players;
+    private User current;
 
-    public top5listAdapter(Context context, List<Players> players) {
+    public top5listAdapter(Context context, List<User> players) {
 //        super(context, eventList);
         this.context = context;
         this.players = players;
@@ -43,7 +45,10 @@ public class top5listAdapter extends BaseAdapter {
             listItem = LayoutInflater.from(context).inflate(R.layout.activity_top5list_adapter, parent, false);
         }
         //////here should be the code how we render top5 players
-
+        TextView name = (TextView) listItem.findViewById(R.id.playerName);
+        name.setText(current.email);
+        TextView score = (TextView) listItem.findViewById(R.id.playerScore);
+        score.setText(current.score);
 
         return  listItem;
     }

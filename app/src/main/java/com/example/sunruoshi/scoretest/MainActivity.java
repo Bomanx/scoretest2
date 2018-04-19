@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     private int total_score = 0;
     private int count = 0;
+    
 
     static final String STATE_SCORE = "user_score";
     static final String STATE_COUNT = "user_count";
@@ -56,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         btn_submit.setEnabled(false);
 
         auth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
 
         if (savedInstanceState != null){
             tv_num1.setText(savedInstanceState.getString("num1"));
@@ -212,6 +218,21 @@ public class MainActivity extends AppCompatActivity {
             if (count == 10){
                 //Toast.makeText(getApplicationContext(), "Your final score is: " + compute.getScore(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Your final score is: " + total_score, Toast.LENGTH_LONG).show();
+                currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                myRef.child("Users").child(currentUser.getUid()).child("score").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int curScore = dataSnapshot.getValue(Integer.class);
+                        if(total_score>curScore){
+                            myRef.child("Users").child(currentUser.getUid()).child("score").setValue(total_score);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 //compute.setCount(0);
                 count = 0;
                 //compute.setScore(0);
